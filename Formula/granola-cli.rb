@@ -1,24 +1,24 @@
 class GranolaCli < Formula
   desc "Unofficial Granola CLI (Rust port with credential-storage fix for desktop ≥7.162)"
   homepage "https://github.com/tmcinerney/granola-cli"
-  version "0.1.1"
+  version "0.1.2"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.1/granola-v0.1.1-aarch64-apple-darwin.tar.gz"
-      sha256 "f54043d7bced3a7de2d8c3e96fd434b67a0b9eb4b9c0032a5b8fd00653a0ae4a"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.2/granola-v0.1.2-aarch64-apple-darwin.tar.gz"
+      sha256 "05ff96641e1995955dda81c5f237b2ea5355103a08612bc1b4312b3cb1022492"
     end
     on_intel do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.1/granola-v0.1.1-x86_64-apple-darwin.tar.gz"
-      sha256 "865b194d553848be79ef968ab5a95f8c83b8dd28bc4bebfbd612d2752a63b19e"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.2/granola-v0.1.2-x86_64-apple-darwin.tar.gz"
+      sha256 "a7071482bb977de027adada15b419b5058eb6e4bd6128bf8bc5dad7ba8a8d220"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.1/granola-v0.1.1-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "ea14ea105a0127a0459656737ce2001d3a2e82da078c595cec35773c43993407"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.1.2/granola-v0.1.2-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "683831285f3014588be1b57127a5efa141c9cc971515677c65a8e429bc39505b"
     end
   end
 
