@@ -1,24 +1,24 @@
 class GranolaCli < Formula
   desc "Unofficial Granola CLI and MCP server with desktop 7.427+ refresh bootstrap"
   homepage "https://github.com/tmcinerney/granola-cli"
-  version "0.3.0"
+  version "0.3.1"
   license "MIT"
 
   on_macos do
     on_arm do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.0/granola-v0.3.0-aarch64-apple-darwin.tar.gz"
-      sha256 "e0e93f52ddbd24ebeba7b8c5719d5f9a08f06c7416395c13043feeab465edd76"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.1/granola-v0.3.1-aarch64-apple-darwin.tar.gz"
+      sha256 "28fd3a8de3366d39bed36699bedebebf421697daeb52aa696b8e80884774ba5e"
     end
     on_intel do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.0/granola-v0.3.0-x86_64-apple-darwin.tar.gz"
-      sha256 "99a89713dccc3f050d6ef3b37dd6a3450c091a59674e69e6a7a3025cbeef6aa0"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.1/granola-v0.3.1-x86_64-apple-darwin.tar.gz"
+      sha256 "cef2605502f0c6b18c78f56737410fcf22b8f5288ccabc628a79180108a09665"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.0/granola-v0.3.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "cb00ea44f72c7734f56a03b0dd4a01562d406bde56545047e7f31ee20b5b4a97"
+      url "https://github.com/tmcinerney/granola-cli/releases/download/v0.3.1/granola-v0.3.1-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "0536422645e4b1a023a94fe9ef9c1ce6b31d539bc562ad1c11eeb1b51c009954"
     end
   end
 
