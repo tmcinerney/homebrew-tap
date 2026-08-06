@@ -16,8 +16,10 @@ cask "colimacontrol" do
     strategy :github_releases
   end
 
-  # The app sets MACOSX_DEPLOYMENT_TARGET = 26.0.
-  depends_on macos: ">= :tahoe"
+  # The app sets MACOSX_DEPLOYMENT_TARGET = 26.0. A bare symbol already means
+  # ">=" here (Cask::DSL::DependsOn#macos= parses with comparator ">="), so this
+  # admits macOS 26 and newer; the ">= :tahoe" string form is deprecated.
+  depends_on macos: :tahoe
 
   # AIDEV-NOTE: deliberately no `depends_on formula: "colima"`. The app resolves
   # Colima through the user's login shell precisely so Nix, MacPorts and manual
