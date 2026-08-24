@@ -1,0 +1,79 @@
+name: Update Beckon formula
+
+on:
+  schedule:
+    - cron: "17 9 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update the formula for the latest public release
+        id: update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          release=$(gh api repos/tmcinerney/beckon/releases/latest)
+          # shellcheck disable=SC2016 # jq must receive the regex literally.
+          version=$(jq -r '.tag_name | select(test("^v[0-9]+\\.[0-9]+\\.[0-9]+$")) | ltrimstr("v")' <<<"$release")
+          test -n "$version"
+
+          # shellcheck disable=SC2016 # Ruby receives a literal regex.
+          current=$(ruby -ne 'puts $1 if %r{/refs/tags/v([^/]+)\\.tar\\.gz}.match($_)' Formula/beckon.rb)
+          if [ "$version" = "$current" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          branch="automation/beckon-v${version}"
+          if gh pr list --repo "$GITHUB_REPOSITORY" --head "$branch" --state open --json number --jq 'length > 0' | grep -qx true; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          archive=$(mktemp)
+          curl --fail --location --silent --show-error \
+            "https://github.com/tmcinerney/beckon/archive/refs/tags/v${version}.tar.gz" \
+            --output "$archive"
+          sha=$(sha256sum "$archive" | awk '{print $1}')
+          rm "$archive"
+
+          # shellcheck disable=SC2016 # Perl receives literal regexes.
+          perl -0pi -e 's{archive/refs/tags/v[^"/]+\\.tar\\.gz}{archive/refs/tags/v'"$version"'.tar.gz}' Formula/beckon.rb
+          # shellcheck disable=SC2016 # Perl receives a literal checksum regex.
+          perl -0pi -e 's{sha256 "[0-9a-f]{64}"}{sha256 "'"$sha"'"}' Formula/beckon.rb
+
+          {
+            echo "changed=true"
+            echo "version=$version"
+            echo "branch=$branch"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open formula bump pull request
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.update.outputs.version }}
+          BRANCH: ${{ steps.update.outputs.branch }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add Formula/beckon.rb
+          git commit -m "chore(beckon): bump to v${VERSION}"
+          git push origin "$BRANCH"
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "chore(beckon): bump Beckon to v${VERSION}" \
+            --body "Automated update for [Beckon v${VERSION}](https://github.com/tmcinerney/beckon/releases/tag/v${VERSION})."
