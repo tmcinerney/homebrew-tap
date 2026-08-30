@@ -68,10 +68,13 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git switch -c "$BRANCH"
+          # A prior run can leave this deterministic automation branch behind
+          # after its PR is closed or manually removed. Recreate it from main
+          # instead of failing with a non-fast-forward push on every later run.
+          git switch -C "$BRANCH"
           git add Formula/beckon.rb
           git commit -m "chore(beckon): bump to v${VERSION}"
-          git push origin "$BRANCH"
+          git push --force-with-lease origin "$BRANCH"
           gh pr create \
             --base main \
             --head "$BRANCH" \
