@@ -1,8 +1,8 @@
 class Beckon < Formula
   desc "Glove80 agent-pane status display and Herdr navigation"
   homepage "https://github.com/tmcinerney/beckon"
-  url "https://github.com/tmcinerney/beckon/archive/refs/tags/v0.1.2.tar.gz"
-  sha256 "de0be578a4f04e07a2f1d57c36b5528937f9d6c78a342c338a21a5209d643432"
+  url "https://github.com/tmcinerney/beckon/archive/refs/tags/v0.2.1.tar.gz"
+  sha256 "1dd8d609d2289a7887a95dd693ec5d5e078beac4928d1177b286f9ab46739191"
   license "MIT"
 
   livecheck do
