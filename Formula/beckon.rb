@@ -1,8 +1,8 @@
 class Beckon < Formula
   desc "Herdr pane navigation and pluggable status displays"
   homepage "https://github.com/tmcinerney/beckon"
-  url "https://github.com/tmcinerney/beckon/archive/refs/tags/v0.2.4.tar.gz"
-  sha256 "54fcaeed239d469f7d8f949181a99e4f208e1408e896ede15b3845562af50a5b"
+  url "https://github.com/tmcinerney/beckon/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "c447ec999993c2a391a966fd21af6aeb537d71f8f3e71da8aa6a37e3292fe6aa"
   license "MIT"
 
   livecheck do
